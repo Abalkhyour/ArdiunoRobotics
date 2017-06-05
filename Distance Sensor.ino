@@ -1,0 +1,63 @@
+const int trigPin = 3;
+const int echoPin = 11;
+
+void setup() {
+  // put your setup code here, to run once:
+pinMode (2, OUTPUT);
+  pinMode (4, OUTPUT);
+  pinMode (6, OUTPUT);
+  pinMode (10, OUTPUT);
+  pinMode (8, OUTPUT);
+  pinMode (12, OUTPUT); 
+  Serial.begin (9600); 
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  long duration, distance;
+digitalWrite(trigPin, LOW); 
+  delayMicroseconds(2); // low for 2 microseconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10); // high for 10 microseconds
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration/2) / 29.1;
+    
+  if ( distance >= 12){    
+    // programming it to detect if anything less then or equal to 12cm close
+
+    
+    digitalWrite (2, LOW);
+    digitalWrite (4, HIGH);
+    analogWrite (6, 250);
+    digitalWrite (8, HIGH);
+    digitalWrite (10, LOW);
+    analogWrite (12, 250);
+// programing it to keep going straight
+
+    
+  } else {
+    // unless detecting something too close then to reverse
+    digitalWrite (2, HIGH);
+    digitalWrite (4, LOW);
+    analogWrite (6, 250);
+    digitalWrite (8, LOW);
+    digitalWrite (10, HIGH);
+    analogWrite (12, 250);
+    delay(600);
+
+    // then to rotate right, roughly 90 degree to the right
+    digitalWrite (2, HIGH);
+    digitalWrite (4, LOW);
+    analogWrite (6, LOW);
+    digitalWrite (8, HIGH);
+    digitalWrite (10, LOW);
+    analogWrite (12, 250);
+    delay(850);
+    
+  }
+}
